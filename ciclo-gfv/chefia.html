@@ -38,6 +38,7 @@ button,.tab,.chip,.seg{user-select:none;-webkit-user-select:none;-webkit-touch-c
 .top h1 i{width:10px;height:10px;border-radius:3px;background:var(--red);flex:none}
 .top h1 span{font-weight:600;opacity:.7}
 .rf{background:rgba(255,255,255,.14);border:0;color:#fff;border-radius:99px;padding:0 14px;font-weight:600;font-size:15px;min-height:36px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:6px;transition:transform 160ms var(--ease-out)}
+.rf[hidden]{display:none}
 .rf svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round}
 .rf.spin svg{animation:spin 700ms linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
