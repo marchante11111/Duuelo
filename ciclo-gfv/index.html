@@ -82,8 +82,9 @@ h3.t{margin:0 0 6px;font-size:18px;font-weight:700}
 .seg{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));background:color-mix(in srgb,var(--mut) 16%,transparent);border-radius:10px;padding:2px;margin-bottom:12px}
 .seg i{position:absolute;top:2px;bottom:2px;left:2px;width:calc((100% - 4px)/3);background:var(--card);border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.12);transition:transform 250ms cubic-bezier(.77,0,.175,1)}
 .seg button{position:relative;border:0;background:none;min-height:34px;font-size:14px;font-weight:600;cursor:pointer;border-radius:8px}
-.dayrow{display:block;width:100%;text-align:left;border:0;background:none;padding:12px 0;border-top:.5px solid var(--line);cursor:pointer;transition:transform 160ms var(--ease-out)}
-.dayrow:first-child{border-top:0;padding-top:2px}
+.day{border-top:.5px solid var(--line);padding:12px 0}
+.day:first-child{border-top:0;padding-top:2px}
+.dayrow{display:block;width:100%;text-align:left;border:0;background:none;padding:0;cursor:pointer;transition:transform 160ms var(--ease-out);font:inherit;color:inherit}
 .dayrow .h{display:flex;justify-content:space-between;gap:8px;margin-bottom:8px}
 .dayrow .h b{font-weight:700;text-transform:capitalize}
 .dayrow .h span{color:var(--mut);font-weight:600;font-size:14px;white-space:nowrap}
@@ -92,7 +93,7 @@ h3.t{margin:0 0 6px;font-size:18px;font-weight:700}
 .chip em{font-style:normal;font-weight:500;opacity:.8;margin-right:4px}
 .chip.bom{background:var(--gb);color:var(--g)}.chip.meio{background:var(--yb);color:var(--y)}.chip.mau{background:var(--rb);color:var(--r)}
 .cycl{margin-top:10px;display:grid;gap:8px;padding-left:10px;border-left:2px solid var(--line)}
-.cycl div{font-size:13px;font-weight:600;color:var(--mut)}
+
 .note{font-size:13px;color:var(--mut);margin:8px 2px 0}
 .empty{color:var(--mut);text-align:center;padding:16px 8px;margin:0;font-weight:500}
 .set{display:grid;gap:12px}
@@ -103,10 +104,18 @@ h3.t{margin:0 0 6px;font-size:18px;font-weight:700}
 .olist div{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-top:.5px solid var(--line);font-size:16px}
 .olist div:first-child{border-top:0}
 .olist span{color:var(--mut);font-weight:600;white-space:nowrap;font-variant-numeric:tabular-nums}
-.hold{width:100%}
-.hold .fill{position:absolute;inset:0;display:grid;place-items:center;background:var(--r);color:#fff;clip-path:inset(0 100% 0 0);transition:clip-path 200ms var(--ease-out);pointer-events:none}
-.hold.holding .fill{clip-path:inset(0 0 0 0);transition:clip-path 1500ms linear}
-.hold .lbl{color:var(--r)}
+.btn.del{width:100%;margin-top:8px;color:var(--r);transition:transform 160ms var(--ease-out),background-color 150ms ease,color 150ms ease}
+.btn.del.armed{background:var(--r);color:#fff}
+.cycbtn{display:block;width:100%;text-align:left;border:0;background:none;padding:8px 0 4px;cursor:pointer;font:inherit;color:inherit;transition:transform 160ms var(--ease-out)}
+.cycbtn:active{transform:scale(.98)}
+.cycbtn .t{font-size:13px;font-weight:600;color:var(--mut);display:flex;justify-content:space-between}
+.cycbtn .t span{color:var(--red)}
+.kb{position:fixed;left:0;right:0;top:0;z-index:40;display:none;align-items:center;gap:2px;padding:4px 8px;background:light-dark(rgba(246,246,248,.97),rgba(36,36,38,.97));-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);box-shadow:0 -.5px 0 var(--line)}
+.kb.on{display:flex}
+.kb button{border:0;background:none;color:var(--red);font-weight:600;font-size:17px;min-width:44px;min-height:40px;padding:0 10px;cursor:pointer;border-radius:10px}
+.kb button svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.kb button[disabled]{opacity:.35}
+.kb .ok{margin-left:auto;font-weight:700;background:var(--red);color:#fff;min-width:64px}
 .tabs{position:fixed;bottom:0;left:0;right:0;z-index:6;background:light-dark(rgba(249,249,249,.8),rgba(22,22,24,.8));-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);box-shadow:0 -.5px 0 var(--line);padding:4px 8px calc(4px + env(safe-area-inset-bottom,0px))}
 .tabs .in{max-width:360px;margin:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
 .tab{border:0;background:none;display:grid;justify-items:center;gap:1px;font-size:11px;font-weight:600;color:var(--mut);min-height:50px;cursor:pointer;padding:5px 0 2px;transition:transform 160ms var(--ease-out)}
@@ -122,7 +131,7 @@ h3.t{margin:0 0 6px;font-size:18px;font-weight:700}
 .grab .hd{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding-bottom:8px}
 .grab h2{margin:0;font-size:24px}
 .grab .hd span{color:var(--mut);font-weight:600;font-size:15px}
-.sbody{overflow-y:auto;overscroll-behavior:contain;padding:0 16px calc(16px + env(safe-area-inset-bottom,0px))}
+.sbody{overflow-y:auto;overscroll-behavior:contain;padding:0 16px calc(16px + env(safe-area-inset-bottom,0px));scroll-padding-bottom:24px}
 .sbody section{margin-bottom:18px}
 .when{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-weight:600;padding:4px 0 8px}
 .when input{width:8.6em;height:44px;text-align:center}
@@ -149,6 +158,7 @@ h3.t{margin:0 0 6px;font-size:18px;font-weight:700}
 <div class="scrim" id="scrim"></div>
 <section class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="shT" hidden></section>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="kb" id="kb" role="toolbar" aria-label="Teclado"><button type="button" id="kbP" aria-label="Campo anterior"><svg viewBox="0 0 24 24"><path d="M6 15l6-6 6 6"/></svg></button><button type="button" id="kbN" aria-label="Campo seguinte"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><button type="button" class="ok" id="kbOk">OK</button></div>
 <script src="config.js"></script>
 <script>
 {
@@ -206,8 +216,10 @@ function nextIni(){const now=new Date(),nm=now.getHours()*60+now.getMinutes();le
 /* ---------- envio para a Google Sheet ---------- */
 async function api(body){const ctl=new AbortController(),t=setTimeout(()=>ctl.abort(),20000);
  try{const r=await fetch(API,{method:'POST',body:JSON.stringify(body),signal:ctl.signal,redirect:'follow'});const j=await r.json();if(!j.ok)throw new Error(j.erro||'Erro na Sheet');return j}finally{clearTimeout(t)}}
-async function refreshConfig(){if(!ON)return;try{const j=await api({action:'config'});const before=JSON.stringify([S.metas,S.equipa]);
- S.metas=Object.assign(JSON.parse(JSON.stringify(DEF)),j.metas||{});S.equipa=Array.isArray(j.equipa)?j.equipa:[];save();if(before!==JSON.stringify([S.metas,S.equipa])&&sheet.hidden)render(true)}catch(e){}}
+async function refreshConfig(){if(!ON)return;try{const j=await api({action:'config'});let changed=JSON.stringify([S.metas,S.equipa]);
+ S.metas=Object.assign(JSON.parse(JSON.stringify(DEF)),j.metas||{});S.equipa=Array.isArray(j.equipa)?j.equipa:[];changed=changed!==JSON.stringify([S.metas,S.equipa]);
+ if(!syncing&&!pendN()){const m=await api({action:'meus',dispositivo:S.disp});if(Array.isArray(m.ids)&&!syncing&&!pendN()){const keep=new Set(m.ids),n0=S.ciclos.length;S.ciclos=S.ciclos.filter(c=>c.sync!=='ok'||keep.has(c.id));if(S.ciclos.length!==n0)changed=true}}
+ save();if(changed&&sheet.hidden)render(true)}catch(e){}}
 async function sync(){
  if(!ON||syncing||!pendN())return;syncing=true;lastErr='';paintSync();
  try{for(const c of S.ciclos.slice()){if(c.sync==='ok')continue;
@@ -232,7 +244,7 @@ function viewHoje(){
  <button class="btn red go" id="reg">Registar ciclo <small>${ni}–${plus2(ni)}</small></button>
  <section class="card"><div class="head"><div class="big">${list.length}</div><p><b>${list.length===1?'ciclo hoje':'ciclos hoje'}</b>${list.length?(sc.tot?sc.hit+' de '+sc.tot+' objetivos cumpridos':'sem objetivos definidos'):'Regista o primeiro ciclo do dia'}</p></div>${ruler(list,ni)}</section>
  <section class="card" aria-label="Resultados de hoje">${meters(rows)}</section>
- <p class="note">Média por ciclo de 2 horas. Toca num bloco do dia para corrigir esse ciclo.</p>`;
+ <p class="note">Média por ciclo de 2 horas. Enganaste-te? Toca no bloco do ciclo para o corrigir ou apagar.</p>`;
  fresh=null;paintSync();
  if($('#nok')){bindName();$('#nok').onclick=()=>{if(!S.nome){toast('Escolhe o teu nome');return}viewHoje()}}
  $('#reg').onclick=e=>startNew(ni,e.currentTarget);
@@ -260,7 +272,7 @@ function cycleSheet(c,from){
  openSheet(`<div class="grab"><div class="bar2"></div><div class="hd"><h2 id="shT">${isNew?'Novo ciclo':'Editar ciclo'}</h2><span>${c.data===todayISO()?'Hoje':esc(dShort(c.data))}</span></div></div>
  <div class="sbody"><div class="when">Das <input class="field" type="time" id="cini" value="${c.ini||''}" step="900" aria-label="Início do ciclo"> às <b id="cfim">${c.ini?plus2(c.ini):'—'}</b></div>`
  +M.map((m,i)=>`<label class="frow" for="f-${m.k}"><span><b>${m.n}</b><small>${obj(m.k)!=null?'objetivo '+fmt(obj(m.k),m):'sem objetivo'}</small></span><input class="field" id="f-${m.k}" inputmode="decimal" autocomplete="off" enterkeyhint="${i<M.length-1?'next':'done'}" placeholder="${m.pct?'%':'—'}" value="${c.v[m.k]!=null?num(c.v[m.k],m,2):''}"></label>`).join('')
- +`<div class="factions"><button class="btn sec" id="cx" type="button">Cancelar</button><button class="btn red" id="sv" type="button">${isNew?'Registar':'Guardar'}</button></div>${isNew?'':`<div style="margin-top:8px"><button class="btn sec hold" id="del" type="button"><span class="lbl">Manter premido para apagar</span><span class="fill" aria-hidden="true">Manter premido para apagar</span></button></div>`}
+ +`<div class="factions"><button class="btn sec" id="cx" type="button">Cancelar</button><button class="btn red" id="sv" type="button">${isNew?'Registar':'Guardar'}</button></div>${isNew?'':`<button class="btn sec del" id="del" type="button">Apagar este ciclo</button>`}
  <p class="note">Percentagens: escreve só o número (35 = 35%).</p></div>`,from);
  const paint=()=>M.forEach(m=>{$('#f-'+m.k).className='field '+cls(st(m.k,c.v[m.k]))});paint();
  $('#cini').oninput=e=>{c.ini=e.target.value||null;c.fim=c.ini?plus2(c.ini):null;$('#cfim').textContent=c.ini?c.fim:'—'};
@@ -269,7 +281,7 @@ function cycleSheet(c,from){
  $('#sv').onclick=()=>{if(M.every(m=>c.v[m.k]==null)){toast('Põe pelo menos um resultado');return}
   c.nome=S.nome;c.sync='pend';if(isNew){c.id=uid();S.ciclos.push(c);fresh=c.id}else{const i=S.ciclos.findIndex(x=>x.id===c.id);if(i>=0)S.ciclos[i]=c}
   save();closeSheet();render(true);toast(isNew?'Ciclo registado':'Ciclo atualizado');sync()};
- if($('#del'))holdBtn($('#del'),1500,()=>{const x=S.ciclos.find(y=>y.id===c.id);if(x)x.sync='del';save();closeSheet();render(true);toast('Ciclo apagado');sync()});
+ if($('#del'))twoTap($('#del'),'Toca outra vez para apagar',()=>{const x=S.ciclos.find(y=>y.id===c.id);if(x)x.sync='del';save();closeSheet();render(true);toast('Ciclo apagado');sync()});
 }
 
 /* ---------- perfil ---------- */
@@ -301,10 +313,11 @@ function histBody(){
  const [a,b]=rangeFor(),list=vis().filter(c=>c.data>=a&&c.data<=b),rows=agg(list),sc=score(rows),days=[...new Set(list.map(c=>c.data))].sort().reverse();
  $('#hb').innerHTML=!list.length?`<div class="card"><p class="empty">Ainda não há ciclos neste período.</p></div>`
  :`<section class="card"><div class="head"><div class="big">${list.length}</div><p><b>${list.length===1?'ciclo':'ciclos'} em ${plural(days.length,'dia','dias')}</b>${sc.tot?sc.hit+' de '+sc.tot+' objetivos na média':'sem objetivos definidos'}</p></div>${meters(rows)}</section>
- <section class="card">${days.map(d=>{const cs=cycOf(d),r=agg(cs),s=score(r);return `<button class="dayrow" data-d="${d}" aria-expanded="${!!open[d]}"><div class="h"><b>${esc(dDay(d))}</b><span>${plural(cs.length,'ciclo','ciclos')}${s.tot?' · '+s.hit+'/'+s.tot:''} ${open[d]?'▴':'▾'}</span></div>${chipRow(r.map(x=>[x.m,x.avg,x.s]))}
- ${open[d]?`<div class="cycl">${cs.map(c=>`<div>${cycLabel(c)}${chipRow(M.map(m=>[m,c.v[m.k],st(m.k,c.v[m.k])]))}</div>`).join('')}</div>`:''}</button>`}).join('')}</section>
- <p class="note">Valores em média por ciclo. Toca num dia para ver os ciclos.</p>`;
- $('#hb').querySelectorAll('.dayrow').forEach(r=>r.onclick=()=>{open[r.dataset.d]=!open[r.dataset.d];histBody()})}
+ <section class="card">${days.map(d=>{const cs=cycOf(d),r=agg(cs),s=score(r);return `<div class="day"><button class="dayrow" data-d="${d}" aria-expanded="${!!open[d]}"><div class="h"><b>${esc(dDay(d))}</b><span>${plural(cs.length,'ciclo','ciclos')}${s.tot?' · '+s.hit+'/'+s.tot:''} ${open[d]?'▴':'▾'}</span></div>${chipRow(r.map(x=>[x.m,x.avg,x.s]))}</button>
+ ${open[d]?`<div class="cycl">${cs.map(c=>`<button class="cycbtn" data-id="${c.id}"><div class="t">${cycLabel(c)}<span>Editar ou apagar</span></div>${chipRow(M.map(m=>[m,c.v[m.k],st(m.k,c.v[m.k])]))}</button>`).join('')}</div>`:''}</div>`}).join('')}</section>
+ <p class="note">Valores em média por ciclo. Toca num dia para ver os ciclos e num ciclo para o corrigir ou apagar.</p>`;
+ $('#hb').querySelectorAll('.dayrow').forEach(r=>r.onclick=()=>{open[r.dataset.d]=!open[r.dataset.d];histBody()});
+ $('#hb').querySelectorAll('.cycbtn').forEach(b=>b.onclick=()=>{const c=S.ciclos.find(x=>x.id===b.dataset.id);if(c)cycleSheet(JSON.parse(JSON.stringify(c)),b)})}
 const chipRow=items=>`<div class="chips" style="margin-top:6px">${items.map(([m,v,s])=>`<span class="chip ${cls(s)}"><em>${m.s}</em>${fmt(v,m)}</span>`).join('')}</div>`;
 
 /* ---------- folha que sobe de baixo ---------- */
@@ -325,14 +338,29 @@ function dragSheet(h){
  h.addEventListener('pointermove',e=>{if(!drag)return;let d=e.clientY-y0;if(d<0)d=-(Math.abs(d)*40)/(40+Math.abs(d)*.55);dy=d;sheet.style.transform=`translateY(${dy}px)`;const H=sheet.offsetHeight||1;scrim.style.opacity=String(Math.max(0,1-Math.max(0,dy)/H));hist.push([performance.now(),dy]);if(hist.length>5)hist.shift()});
  const end=()=>{if(!drag)return;drag=false;const a=hist[0],b=hist[hist.length-1];const v=b&&a&&b[0]>a[0]?(b[1]-a[1])/(b[0]-a[0]):0;const H=sheet.offsetHeight||1;sheet.style.transition='';scrim.style.transition='';if(dy>H*.4||(v>.11&&dy>10))closeSheet();else{sheet.style.transform='';scrim.style.opacity='1'}};
  h.addEventListener('pointerup',end);h.addEventListener('pointercancel',end)}
-function holdBtn(el,ms,done){let t=null;
- const start=e=>{if(t)return;if(e.type==='keydown'&&e.key!=='Enter'&&e.key!==' ')return;if(e.type==='keydown')e.preventDefault();el.classList.add('holding');t=setTimeout(()=>{t=null;el.classList.remove('holding');done()},ms)};
- const stop=()=>{if(!t)return;clearTimeout(t);t=null;el.classList.remove('holding')};
- el.addEventListener('pointerdown',start);['pointerup','pointerleave','pointercancel'].forEach(x=>el.addEventListener(x,stop));el.addEventListener('keydown',start);el.addEventListener('keyup',stop);el.addEventListener('contextmenu',e=>e.preventDefault())}
+function twoTap(el,armedTxt,done){const txt=el.textContent;let t=0;el.onclick=()=>{if(!el.classList.contains('armed')){el.classList.add('armed');el.textContent=armedTxt;t=setTimeout(()=>{el.classList.remove('armed');el.textContent=txt},4000);return}clearTimeout(t);done()}}
 scrim.onclick=()=>closeSheet();
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!sheet.hidden)closeSheet()});
-const vv=window.visualViewport;
-if(vv){const fit=()=>{document.documentElement.style.setProperty('--vvh',vv.height+'px');sheet.style.bottom=Math.max(0,window.innerHeight-vv.height-vv.offsetTop)+'px'};vv.addEventListener('resize',fit);vv.addEventListener('scroll',fit);fit()}
+/* teclado do iPhone: a folha fica por cima do teclado, o campo ativo fica sempre à vista e há uma barra com ‹ › e OK */
+const vv=window.visualViewport,kb=$('#kb'),COARSE=matchMedia('(pointer: coarse)').matches;
+const isField=el=>el&&el.matches&&el.matches('input:not([type=checkbox]):not([type=radio]):not([type=date]):not([type=time]),textarea');
+const fieldList=()=>[...(sheet.hidden?app:sheet).querySelectorAll('input:not([type=checkbox]):not([type=radio]):not([type=date]):not([type=time]),textarea')].filter(e=>e.offsetParent);
+function fit(){
+ const h=vv?vv.height:innerHeight,top=vv?vv.offsetTop:0,kbOpen=COARSE&&isField(document.activeElement);
+ kb.classList.toggle('on',kbOpen);const kh=kbOpen?kb.offsetHeight:0;
+ if(kbOpen){kb.style.top=(top+h-kh)+'px';const L=fieldList(),i=L.indexOf(document.activeElement);$('#kbP').disabled=i<=0;$('#kbN').disabled=i<0||i>=L.length-1}
+ document.documentElement.style.setProperty('--vvh',(h-kh)+'px');
+ sheet.style.bottom=Math.max(0,innerHeight-h-top+kh)+'px'}
+function reveal(el){if(!el||!el.isConnected)return;const box=el.closest('.sbody');const h=vv?vv.height:innerHeight,top=vv?vv.offsetTop:0,kh=kb.classList.contains('on')?kb.offsetHeight:0;const r=el.getBoundingClientRect();
+ if(box){const b=box.getBoundingClientRect(),lo=Math.min(b.bottom,top+h-kh)-16,hi=b.top+8;if(r.bottom>lo)box.scrollTop+=r.bottom-lo;else if(r.top<hi)box.scrollTop-=hi-r.top}
+ else{const lo=top+h-kh-24;if(r.bottom>lo||r.top<top+80)window.scrollBy(0,r.top-(top+h/3))}}
+document.addEventListener('focusin',e=>{if(!isField(e.target))return;fit();setTimeout(()=>{fit();reveal(e.target)},320)});
+document.addEventListener('focusout',()=>setTimeout(fit,60));
+if(vv){vv.addEventListener('resize',()=>{fit();if(isField(document.activeElement))reveal(document.activeElement)});vv.addEventListener('scroll',fit)}
+kb.addEventListener('pointerdown',e=>e.preventDefault());
+const step=d=>{const L=fieldList(),i=L.indexOf(document.activeElement);const n=L[i+d];if(n){n.focus({preventScroll:true});reveal(n)}};
+$('#kbP').onclick=()=>step(-1);$('#kbN').onclick=()=>step(1);$('#kbOk').onclick=()=>{document.activeElement&&document.activeElement.blur();fit()};
+fit();
 
 /* ---------- navegação ---------- */
 const V={hoje:viewHoje,historico:viewHist};
